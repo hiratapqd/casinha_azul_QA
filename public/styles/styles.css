@@ -9,34 +9,24 @@
 }
 
 body {
-    background-color: #f9f9f9; 
+    background-color: #f9f9f9; /* Fundo leve para dar contraste */
 }
 
 /* Estilização do Header e Menu com Fundo Azul */
 header {
-    background-color: #1277bb; 
-    border-bottom: 3px solid #0693e3; 
-    align-items: center;
+    background-color: #1277bb; /* O azul turquesa do site original */
+    border-bottom: 3px solid #0693e3; /* Uma sombra azul um pouco mais escura para dividir */
     padding: 0 20px;
-    height: 120px;
 }
 
 nav {
     display: flex;
-    margin: 0 auto;
+    justify-content: center;
     align-items: center;
-    height: 70px;
-}
-
-.logo {
-    margin-top: 40px;
-    margin-right: 20px;
-    margin-left: 10px;
-    height: 90px;
+    height: 120px;
 }
 
 .menu {
-    margin-top: 40px;
     list-style: none;
     display: flex;
 }
@@ -49,14 +39,14 @@ nav {
     display: block;
     padding: 20px 25px;
     text-decoration: none;
-    color: #ffffff; 
+    color: #ffffff; /* Texto branco para contrastar com o azul */
     font-weight: 600;
     transition: all 0.3s ease;
 }
 
-/* Efeito de Hover  */
+/* Efeito de Hover (Quando passa o mouse) */
 .menu a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2); /* Fundo branco semi-transparente */
     color: #ffffff;
 }
 
@@ -77,12 +67,12 @@ nav {
 .dropdown-content a {
     padding: 12px 20px;
     font-size: 14px;
-    color: #333333; 
+    color: #333333; /* Texto escuro dentro do submenu branco */
 }
 
 .dropdown-content a:hover {
     background-color: #f1f1f1;
-    color: #00c1cf; 
+    color: #00c1cf; /* Texto azul no hover dentro do submenu */
 }
 
 /* Mostrar o submenu ao passar o mouse */
@@ -117,13 +107,13 @@ nav {
 /* Configuração para alinhar campos lado a lado */
 .form-row {
     display: flex;
-    gap: 20px; 
+    gap: 20px; /* Espaço entre os campos */
     margin-bottom: 15px;
 }
 
 .form-row .form-group {
-    flex: 1; 
-    margin-bottom: 0; 
+    flex: 1; /* Faz os campos dividirem o espaço igualmente */
+    margin-bottom: 0; /* Remove a margem inferior para não desalinharem */
 }
 
 /* Ajustes específicos para campos menores ou maiores */
@@ -144,7 +134,7 @@ nav {
 }
 /* Centraliza o cabeçalho da seção de disponibilidade */
 .disponibilidade-secao {
-    text-align: center; 
+    text-align: center; /* Centraliza o título e o parágrafo */
     margin-top: 30px;
     padding: 20px;
     background: #fdfdfd;
@@ -154,27 +144,34 @@ nav {
 
 /* Container da grade para centralizar o conteúdo interno */
 .grade-container {
-    display: inline-block; 
-    text-align: left;      
+    display: inline-block; /* Faz o container ter apenas a largura necessária */
+    text-align: left;      /* Mantém o texto das modalidades alinhado à esquerda internamente */
     margin-top: 20px;
     width: 100%;
-    max-width: 800px;      
+    max-width: 800px;      /* Limita a largura para não espalhar demais em telas grandes */
+}
 
 /* Ajuste das linhas para centralização */
 .linha-modalidade {
     display: flex;
-    justify-content: center; 
+    justify-content: center; /* Centraliza os itens na linha */
     align-items: center;
     padding: 10px 0;
     border-bottom: 1px solid #f0f0f0;
 }
 
+.logo {
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-left: 10px;
+    height: 90px;
+}
 /* Espaço fixo para o nome da modalidade para alinhar as colunas de dias */
 .label-modalidade {
     width: 150px; 
     font-weight: bold;
     color: #2c3e50;
-    text-align: right;    
+    text-align: right;    /* Alinha o nome da modalidade em direção aos checks */
     margin-right: 20px;
 }
 
