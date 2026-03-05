@@ -193,7 +193,7 @@ app.get('/solicitacao_atendimento', (req, res) => res.render('solicitacao_atendi
 app.get('/atendimento/reiki', async (req, res) => {
     res.render('atendimento/reiki');
 });
-
+app.get('/atendimento/passe', (req, res) => res.render('atendimento/passe'));
 app.get('/atendimento/auriculo', (req, res) => res.render('atendimento/auriculo'));
 app.get('/atendimento/maos_sem_fronteiras', (req, res) => res.render('atendimento/maos_sem_fronteiras'));
 app.get('/atendimento/homeopatico', (req, res) => res.render('atendimento/homeopatico'));
