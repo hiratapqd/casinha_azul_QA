@@ -18,7 +18,7 @@ app.use(express.json());
 // --- CONEXÃO COM MONGODB ---
 const MONGODB_URI = process.env.MONGODB_URI;
 mongoose.connect(MONGODB_URI)
-    .then(() => console.log("✅ Conectado ao MongoDB Atlas 22:43"))
+    .then(() => console.log("✅ Conectado ao MongoDB Atlas Mar_7_08:11"))
     .catch(err => console.error("❌ Erro ao conectar ao MongoDB:", err));
 
 // Middleware Global
@@ -144,6 +144,17 @@ app.get('/atendimento/reiki', async (req, res) => {
     res.render('atendimento/reiki');
 });
 
+app.get('/relatorios/todos-assistidos', async (req, res) => {
+    try {
+        // Busca todos os assistidos e ordena por nome
+        const assistidos = await Assistido.find().sort({ nome: 1 }).lean();
+        
+        res.render('relatorios/relatorio_assistidos', { assistidos });
+    } catch (err) {
+        console.error("Erro ao gerar relatório de assistidos:", err);
+        res.status(500).send("Erro ao carregar relatório.");
+    }
+});
 app.get('/atendimento/auriculo', (req, res) => res.render('atendimento/auriculo'));
 app.get('/atendimento/maos_sem_fronteiras', (req, res) => res.render('atendimento/maos_sem_fronteiras'));
 app.get('/atendimento/homeopatico', (req, res) => res.render('atendimento/homeopatico'));

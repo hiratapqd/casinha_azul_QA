@@ -1,0 +1,38 @@
+<html>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <%- include('../partials/header') %>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Assistidos</title>
+
+<body>
+        <h1>Relatório Geral de Assistidos</h1>
+        <p>Total de cadastros: <strong><%= assistidos.length %></strong></p>
+
+        <table border="1" style="width:100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% assistidos.forEach(pesssoa => { %>
+                    <tr>
+                        <td><%= pesssoa.nome %></td>
+                        <td><%= pesssoa.cpf %></td>
+                        <td><%= pesssoa.telefone %></td>
+                        <td><%= pesssoa.email %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
+<%- include('../partials/footer') %>
