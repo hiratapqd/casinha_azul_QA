@@ -134,15 +134,9 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/solicitacao_atendimento', (req, res) => res.render('solicitacao_atendimento'));
-app.get('/cadastro_mediuns', (req, res) => {
-    res.render('cadastro_mediuns');
-});
-app.get('/atendimento/apometrico', (req, res) => {
-    res.render('atendimento/apometrico', { atendimentos: [] });
-});
-app.get('/atendimento/reiki', async (req, res) => {
-    res.render('atendimento/reiki');
-});
+app.get('/cadastro_mediuns', (req, res) => {res.render('cadastro_mediuns');});
+app.get('/atendimento/apometrico', (req, res) => {res.render('atendimento/apometrico', { atendimentos: [] });});
+app.get('/atendimento/reiki', async (req, res) => {res.render('atendimento/reiki');});
 
 app.get('/relatorios/todos-assistidos', async (req, res) => {
     try {
@@ -460,7 +454,7 @@ app.post('/atendimento/solicitacao', async (req, res) => {
         res.status(500).send("Erro: " + error.message);
     }
 });
-// --- ROTA PARA SALVAR ATENDIMENTO APOMETRICO ---
+/* // --- ROTA PARA SALVAR ATENDIMENTO APOMETRICO ---
 app.post('/atendimento/apometrico', async (req, res) => {
   try {
 
@@ -512,6 +506,23 @@ app.post('/atendimento/auriculo', async (req, res) => {
         console.error("❌ Erro ao salvar atendimento:", error);
         res.status(500).send("Erro ao salvar: " + error.message);
     }
+}); */
+
+const tiposAtendimento = ['reiki', 'passe', 'homeopatico', 'maos_sem_fronteiras'];
+
+tiposAtendimento.forEach(tipo => {
+    app.post(`/atendimento/${tipo}`, async (req, res) => {
+        try {
+            // Garante que o campo 'tipo' seja gravado corretamente
+            const dados = { ...req.body, tipo: tipo, data: new Date() };
+            const novoAtendimento = new Atendimento(dados);
+            await novoAtendimento.save();
+            res.redirect(`/atendimento/${tipo}?sucesso=true`);
+        } catch (error) {
+            console.error(`Erro ao salvar ${tipo}:`, error);
+            res.status(500).send("Erro ao salvar: " + error.message);
+        }
+    });
 });
 
 // --- OUTRAS ROTAS ---
