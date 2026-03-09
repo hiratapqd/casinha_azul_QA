@@ -1,53 +1,121 @@
-<html>
-    <link rel="stylesheet" href="/styles/styles.css">
-    <%- include('../partials/header') %>
+<%- include('../partials/header') %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
+<link rel="stylesheet" href="/styles/styles.css">
 <head>
     <meta charset="UTF-8">
     <title>Relatório de Assistidos</title>
+    <style>
+        /* Estilos para os botões/etiquetas de tratamento */
+        .badge-tratamento {
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            white-space: nowrap;
+            text-transform: capitalize;
+            display: inline-block;
+        }
+    </style>
+</head>
 
 <body>
-<main style="padding: 20px;">
-    <h1>Relatório Geral de Assistidos</h1>
-    <p>Total de cadastros: <strong><%= assistidos.length %></strong> </p>
+    <main style="padding: 20px;">
+        <h1>Relatório Geral de Assistidos</h1>
+        <p>Total de cadastros: <strong id="totalExibido"><%= assistidos.length %></strong></p>
+        
+        <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+            <input type="text" id="inputNome" placeholder="Buscar por nome..." style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+            <input type="text" id="inputCPF" placeholder="Buscar por CPF..." style="padding: 8px; width: 180px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
 
-    <table border="1" style="width:100%; border-collapse: collapse; margin-top: 20px;">
-        <thead>
-            <tr style="background-color: #f2f2f2;">
-                <th style="padding: 10px; text-align: left;">Nome</th> 
-                <th style="padding: 10px; text-align: left;">CPF</th> 
-                <th style="padding: 10px; text-align: left;">Telefone</th>
-                <th style="padding: 10px; text-align: left;">E-mail</th> 
-                <th style="padding: 10px; text-align: left;">Tratamentos Realizados</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% assistidos.forEach(pessoa => { %> 
-                <tr style="border-bottom: 1px solid #ddd;">
-                    <td style="padding: 10px;"><%= pessoa.nome %></td>
-                    <td style="padding: 10px;"><%= pessoa.cpf %></td> 
-                    <td style="padding: 10px;"><%= pessoa.telefone %></td> 
-                    <td style="padding: 10px;"><%= pessoa.email %></td>
-                    <td style="padding: 10px;">
-                        <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-                            <% if (pessoa.tratamentos && pessoa.tratamentos.length > 0) { %>
-                                <% pessoa.tratamentos.forEach(tratamento => { %>
-                                    <span style="background-color: #e0e7ff; color: #4338ca; padding: 2px 8px; border-radius: 10px; font-size: 11px; border: 1px solid #c7d2fe; white-space: nowrap;">
-                                        <%= tratamento %>
-                                    </span>
-                                <% }) %>
-                            <% } else { %>
-                                <small style="color: #999;">Nenhum histórico</small>
-                            <% } %>
-                        </div>
-                    </td>
+        <table id="tabelaAssistidos" border="1" style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="padding: 10px; text-align: left;">Nome</th>
+                    <th style="padding: 10px; text-align: left;">CPF</th>
+                    <th style="padding: 10px; text-align: left;">Telefone</th>
+                    <th style="padding: 10px; text-align: left;">E-mail</th>
+                    <th style="padding: 10px; text-align: left;">Tratamentos Realizados</th>
                 </tr>
-            <% }) %> 
-        </tbody>
-    </table>
-</main>
+            </thead>
+            <tbody>
+                <% assistidos.forEach(pessoa => { %>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;"><%= pessoa.nome %></td>
+                        <td style="padding: 10px;"><%= pessoa.cpf %></td>
+                        <td style="padding: 10px;"><%= pessoa.telefone %></td>
+                        <td style="padding: 10px;"><%= pessoa.email %></td>
+                        <td style="padding: 10px;">
+                            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                                <% if (pessoa.tratamentos && pessoa.tratamentos.length > 0) { 
+                                    const cores = {
+                                        'apometrico': { bg: '#e0e7ff', texto: '#4338ca', borda: '#c7d2fe' },
+                                        'auriculo': { bg: '#fef9c3', texto: '#854d0e', borda: '#fef08a' },
+                                        'homeopatico': { bg: '#fce7f3', texto: '#9d174d', borda: '#fbcfe8' },
+                                        'maos_sem_fronteiras': { bg: '#ffedd5', texto: '#9a3412', borda: '#fed7aa' },
+                                        'passe': { bg: '#dcfce7', texto: '#166534', borda: '#bbf7d0' },
+                                        'reiki': { bg: '#f5f3ff', texto: '#5b21b6', borda: '#ddd6fe' }
+                                    };
+
+                                    pessoa.tratamentos.forEach(tratamento => { 
+                                        const slug = tratamento.toLowerCase();
+                                        const estilo = cores[slug] || { bg: '#f3f4f6', texto: '#374151', borda: '#e5e7eb' };
+                                %>
+                                    <span class="badge-tratamento" style="background-color: <%= estilo.bg %>; color: <%= estilo.texto %>; border: 1px solid <%= estilo.borda %>;">
+                                        <%= tratamento.replace(/_/g, ' ') %>
+                                    </span>
+                                <% }) } else { %>
+                                    <small style="color: #999;">Nenhum histórico</small>
+                                <% } %>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputNome = document.getElementById('inputNome');
+            const inputCPF = document.getElementById('inputCPF');
+            const tabela = document.getElementById('tabelaAssistidos');
+            const linhas = tabela.querySelector('tbody').getElementsByTagName('tr');
+            const contador = document.getElementById('totalExibido');
+
+            function filtrarTabela() {
+                const filtroNome = inputNome.value.toLowerCase().trim();
+                const filtroCPF = inputCPF.value.toLowerCase().trim();
+                let visiveis = 0;
+
+                Array.from(linhas).forEach(linha => {
+                    const colunas = linha.getElementsByTagName('td');
+                    if (colunas.length > 0) {
+                        const textoNome = colunas[0].textContent.toLowerCase();
+                        const textoCPF = colunas[1].textContent.toLowerCase();
+
+                        const correspondeNome = textoNome.includes(filtroNome);
+                        const correspondeCPF = textoCPF.includes(filtroCPF);
+
+                        if (correspondeNome && correspondeCPF) {
+                            linha.style.display = "";
+                            visiveis++;
+                        } else {
+                            linha.style.display = "none";
+                        }
+                    }
+                });
+                contador.textContent = visiveis;
+            }
+
+            
+            inputNome.addEventListener('input', filtrarTabela);
+            inputCPF.addEventListener('input', filtrarTabela);
+        });
+    </script>
 </body>
 </html>
+
 <%- include('../partials/footer') %>
