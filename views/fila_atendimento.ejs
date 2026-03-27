@@ -1,0 +1,57 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/styles/styles.css">
+<main>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Sendo Atendido pela</th>
+                <th>Terapia</th>
+                <th>Status</th>
+                <th>Hora</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (solicitacoes.length > 0) { %>
+                <% solicitacoes.forEach(item => { %>
+                    <tr>
+                        <td><%= item.nome_assistido %></td>
+                        <td><%= item.sendo_atendido %></td>
+                        <td style="text-transform: capitalize;">
+                                            <%= item.tipo %>
+                        </td>
+                        <td>
+                            <span class="status-badge <%= item.status === 'Em Atendimento' ? 'atendimento' : '' %>">
+                                <%= item.status %>
+                            </span>
+                        </td>
+                        <td><%= item.data_pedido.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) %></td>
+                        <td>
+                                <% if (item.status === 'Confirmado' || item.status === 'Espera'|| item.status === 'Aguardando') { %>
+                                <a href="/atendimento/iniciar/<%= item._id %>" class="btn-atender">Atender</a>
+                                
+                                <% if (item.status === 'Espera') { %>
+                                    <a href="/atendimento/cancelar/<%= item._id %>" 
+                                    class="btn-atender" 
+                                    style="background-color: #dc3545; margin-left: 5px;"
+                                    onclick="return confirm('Deseja realmente cancelar esta solicitação?')">
+                                    Cancelar
+                                    </a>
+                                <% } %>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="5">Nenhuma solicitação para hoje.</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</main>
+
+
+<%- include('partials/footer') %>

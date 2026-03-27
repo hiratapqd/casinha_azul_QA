@@ -11,7 +11,6 @@ const VoluntarioSchema = new mongoose.Schema({
         type: Date, 
         default: Date.now
     },
-    // Armazena os arrays de dias para cada modalidade
     disponibilidade: {
         apometria: [String],
         reiki: [String],
@@ -22,6 +21,8 @@ const VoluntarioSchema = new mongoose.Schema({
         cantina: [String],
         mesa: [String]
     }
+}, { 
+    collection: 'voluntarios'
 });
 
 module.exports = mongoose.model('Voluntario', VoluntarioSchema);

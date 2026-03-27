@@ -6,9 +6,10 @@ const AtendimentoSchema = new mongoose.Schema({
     nome_assistido: { type: String },
     voluntario: { type: String, required: true },
     observacoes: { type: String },
-    tipo: { type: String, required: true }
+    tipo: { type: String, required: true },
+    prioridade: { type: Number } 
 }, { 
-    collection: 'atendimento' 
+    collection: 'atendimentos'
 });
 
 module.exports = mongoose.model('Atendimento', AtendimentoSchema);

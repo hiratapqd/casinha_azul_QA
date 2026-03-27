@@ -40,37 +40,48 @@
                     <th style="padding: 10px; text-align: left;">Tratamentos Realizados</th>
                 </tr>
             </thead>
-            <tbody>
-                <% assistidos.forEach(pessoa => { %>
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 10px;"><%= pessoa.nome %></td>
-                        <td style="padding: 10px;"><%= pessoa.cpf %></td>
-                        <td style="padding: 10px;"><%= pessoa.telefone %></td>
-                        <td style="padding: 10px;"><%= pessoa.email %></td>
-                        <td style="padding: 10px;">
-                            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-                                <% if (pessoa.tratamentos && pessoa.tratamentos.length > 0) { 
-                                    const cores = {
-                                        'apometrico': { bg: '#e0e7ff', texto: '#4338ca', borda: '#c7d2fe' },
-                                        'auriculo': { bg: '#fef9c3', texto: '#854d0e', borda: '#fef08a' },
-                                        'homeopatico': { bg: '#fce7f3', texto: '#9d174d', borda: '#fbcfe8' },
-                                        'maos_sem_fronteiras': { bg: '#ffedd5', texto: '#9a3412', borda: '#fed7aa' },
-                                        'passe': { bg: '#dcfce7', texto: '#166534', borda: '#bbf7d0' },
-                                        'reiki': { bg: '#f5f3ff', texto: '#5b21b6', borda: '#ddd6fe' }
-                                    };
+                <%
+                    // Definimos o mapa de cores que você encontrou
+                    const coresTratamento = {
+                        'apometria': { bg: '#e0e7ff', texto: '#4338ca', borda: '#c7d2fe' },
+                        'auriculo': { bg: '#fef9c3', texto: '#854d0e', borda: '#fef08a' },
+                        'homeopatico': { bg: '#fce7f3', texto: '#9d174d', borda: '#fbcfe8' },
+                        'maos_sem_fronteiras': { bg: '#ffedd5', texto: '#9a3412', borda: '#fed7aa' },
+                        'passe': { bg: '#dcfce7', texto: '#166534', borda: '#bbf7d0' },
+                        'reiki': { bg: '#f5f3ff', texto: '#5b21b6', borda: '#ddd6fe' }
+                    };
 
-                                    pessoa.tratamentos.forEach(tratamento => { 
-                                        const slug = tratamento.toLowerCase();
-                                        const estilo = cores[slug] || { bg: '#f3f4f6', texto: '#374151', borda: '#e5e7eb' };
-                                %>
-                                    <span class="badge-tratamento" style="background-color: <%= estilo.bg %>; color: <%= estilo.texto %>; border: 1px solid <%= estilo.borda %>;">
-                                        <%= tratamento.replace(/_/g, ' ') %>
-                                    </span>
-                                <% }) } else { %>
-                                    <small style="color: #999;">Nenhum histórico</small>
-                                <% } %>
-                            </div>
-                        </td>
+                    // Função para pegar a cor ou retornar um padrão caso o tipo não exista no mapa
+                    function getEstilo(tipo) {
+                        const slug = tipo.toLowerCase().replace(/\s+/g, '_'); // Converte "Mãos sem Fronteiras" para "maos_sem_fronteiras"
+                        return coresTratamento[slug] || { bg: '#f3f4f6', texto: '#374151', borda: '#d1d5db' };
+                    }
+                %>
+            <tbody>
+                <% assistidos.forEach(a => { %>
+                    <tr>
+                        <td><%= a.nome || a.nome_assistido %></td>
+                        <td><%= a.cpf || a._id %></td>
+                        <td><%= a.telefone || a.telefone_assistido %></td>
+                        <td><%= a.email || a.email_assistido %></td>
+                        <td>
+                            <% if (a.tratamentos && a.tratamentos.length > 0) { %>
+                                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                    <% a.tratamentos.forEach(t => { 
+                                        const estilo = getEstilo(t); 
+                                    %>
+                                        <span class="badge-tratamento" 
+                                            style="background-color: <%= estilo.bg %>; 
+                                                    color: <%= estilo.texto %>; 
+                                                    border: 1px solid <%= estilo.borda %>;">
+                                            <%= t %>
+                                        </span>
+                                    <% }) %>
+                                </div>
+                            <% } else { %>
+                                <span style="color: #999;">Nenhum</span>
+                            <% } %>
+                        </td>               
                     </tr>
                 <% }) %>
             </tbody>
@@ -115,6 +126,7 @@
             inputCPF.addEventListener('input', filtrarTabela);
         });
     </script>
+
 </body>
 </html>
 

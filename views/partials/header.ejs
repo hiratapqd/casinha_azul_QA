@@ -1,19 +1,21 @@
 <header>
 
     <nav>
-        <img src="../images/logotipo-casinhazul.png" alt="Logotipo da Casinha Azul" class="logo">
+        <img src="/images/logotipo-casinhazul.png" alt="Logotipo da Casinha Azul" class="logo">
         <ul class="menu">
             <li><a href="/">Início</a></li>
             <li><a href="/cadastro">Cadastro</a></li>
-            <li><a href="/solicitacao_atendimento">Solicitação de Atendimento</a></li>
+            <li class="dropdown">
+                <a>Solicitação de Atendimento</a>
+                <ul class="dropdown-content">
+                    <li><a href="/solicitacao_atendimento">Atendimento Apométrico</a></li>
+                    <li><a href="/recepcao">Terapias Complementares</a></li>
+                </ul>
+            </li>
+            <li><a href="/fila-atendimento">Fila de Atendimento</a></li>
             <li class="dropdown">
                 <a>Atendimento</a>
                 <ul class="dropdown-content">
-<!--                     <li><a href="/atendimento/apometrico">Apométrico</a></li>
-                    <li><a href="/atendimento/reiki">Reiki</a></li>
-                    <li><a href="/atendimento/auriculo">Aurículo</a></li>
-                    <li><a href="/atendimento/maos_sem_fronteiras">Mãos Sem Fronteira</a></li>
-                    <li><a href="/atendimento/homeopatico">Homeopático</a></li> -->
                     <% ((typeof terapias !== 'undefined' ? terapias : [])).forEach(t => { %>
                         <li><a href="/atendimento/<%= t.slug %>"><%= t.nome %></a></li>
                     <% }) %>
@@ -24,7 +26,8 @@
                 <a>Voluntários</a>
                 <ul class="dropdown-content">
                     <li><a href="/cadastro_mediuns">Cadastro de Voluntários</a></li>
-                    <li><a href="/voluntarios/escala">Escala de Voluntários</a></li>
+                    <li><a href="/relatorios/relatorio-voluntarios">Lista de Voluntários</a></li>
+                    <li><a href="/visualizar_voluntarios">Escala de Voluntários</a></li>
                     
                 </ul>
            </li>
@@ -35,6 +38,14 @@
                     <li><a href="/relatorios/apometria-inativos">Apometria Inativos</a></li> 
                     <li><a href="/relatorios/todos-assistidos">Lista de todos os Assistidos</a></li>
                 </ul>
+            </li>
+            <li class="dropdown">
+                <a>Livraria</a>
+                <ul class="dropdown-content">
+                    <li><a href="/livraria/cadastro">Cadastrar Livro</a></li>
+                    <li><a href="/livraria/estoque">Estoque de Livros</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </header>

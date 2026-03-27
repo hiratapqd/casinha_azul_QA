@@ -1,5 +1,5 @@
 {
-  "name": "casinha-azul",
+  "name": "casinha_azul_v2",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -13,9 +13,8 @@
   "type": "commonjs",
   "dependencies": {
     "dotenv": "^17.3.1",
-    "ejs": "^4.0.1",
+    "ejs": "^5.0.1",
     "express": "^5.2.1",
-    "mongodb": "^7.1.0",
-    "mongoose": "^9.2.3"
+    "mongoose": "^9.3.0"
   }
 }

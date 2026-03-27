@@ -1,5 +1,3 @@
-// utils/cpfValidator.js
-
 /**
  * Remove caracteres não numéricos do CPF
  */
