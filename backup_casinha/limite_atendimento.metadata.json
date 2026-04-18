@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"tipo":{"$numberInt":"1"}},"name":"tipo_1","unique":true}],"uuid":"3e16003f2847452b8498c9c2c86bd5b0","collectionName":"limite_atendimento","type":"collection"}

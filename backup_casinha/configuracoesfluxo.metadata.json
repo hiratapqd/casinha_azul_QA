@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"terapia":{"$numberInt":"1"}},"name":"terapia_1","unique":true}],"uuid":"471cb2fbc8c14b63a281a3f76e45ab0c","collectionName":"configuracoesfluxo","type":"collection"}
