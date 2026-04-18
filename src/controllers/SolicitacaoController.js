@@ -51,20 +51,42 @@ exports.criarSolicitacaoComCadastro = async (req, res) => {
             });
         }
 
+        const dataSolicitacao = new Date(`${dados.data}T00:00:00-03:00`);
         const ultimoAtendimento = await Atendimento.findOne({
             cpf_assistido: dados.cpf_assistido,
             tipo: tipoParaBusca
         }).sort({ data: -1 }).lean();
 
         if (ultimoAtendimento) {
-            const dataSolicitacao = new Date(`${dados.data}T00:00:00-03:00`);
+            const [totalApometriasHistoricas, totalPassesHistoricos, totalOutrosAtendimentos] = await Promise.all([
+                Atendimento.countDocuments({
+                    cpf_assistido: dados.cpf_assistido,
+                    tipo: 'apometria'
+                }),
+                Atendimento.countDocuments({
+                    cpf_assistido: dados.cpf_assistido,
+                    tipo: 'passe'
+                }),
+                Atendimento.countDocuments({
+                    cpf_assistido: dados.cpf_assistido,
+                    tipo: { $nin: ['apometria', 'passe'] }
+                })
+            ]);
+
+            const diasDeBloqueio =
+                totalApometriasHistoricas === 1 &&
+                totalPassesHistoricos === 1 &&
+                totalOutrosAtendimentos === 0
+                    ? 90
+                    : 27;
+
             const dataLiberacao = new Date(ultimoAtendimento.data);
-            dataLiberacao.setDate(dataLiberacao.getDate() + 90);
+            dataLiberacao.setDate(dataLiberacao.getDate() + diasDeBloqueio);
 
             if (dataSolicitacao < dataLiberacao) {
                 return res.json({
                     status: 'bloqueado_intervalo',
-                    mensagem: `Nova apometria liberada apenas a partir de ${dataLiberacao.toLocaleDateString('pt-BR')}.`
+                    mensagem: `Pelo intervalo desde o ultimo ciclo de atendimento, uma nova apometria esta liberada apenas a partir de ${dataLiberacao.toLocaleDateString('pt-BR')}.`
                 });
             }
         }
