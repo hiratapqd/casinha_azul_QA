@@ -28,7 +28,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 6',
             tipo: 'apometria',
             data: dataDiasAtras(91),
-            voluntario: 'Demonstração apometria',
+            voluntario: 'Jane Doe',
             observacoes: 'Cenario demo: apometria realizada ha 91 dias.'
         },
         {
@@ -36,7 +36,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 6',
             tipo: 'passe',
             data: dataDiasAtras(91),
-            voluntario: 'Demonstração passe',
+            voluntario: 'Jack Doe',
             observacoes: 'Cenario demo: passe realizado apos apometria ha 91 dias.'
         },
         {
@@ -44,7 +44,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 7',
             tipo: 'apometria',
             data: dataDiasAtras(61),
-            voluntario: 'Demonstração apometria',
+            voluntario: 'Jane Doe',
             observacoes: 'Cenario demo: apometria realizada ha 61 dias.'
         },
         {
@@ -52,7 +52,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 7',
             tipo: 'passe',
             data: dataDiasAtras(61),
-            voluntario: 'Demonstração passe',
+            voluntario: 'Jack Doe',
             observacoes: 'Cenario demo: passe realizado apos apometria ha 61 dias.'
         },
         {
@@ -60,7 +60,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 8',
             tipo: 'apometria',
             data: dataDiasAtras(31),
-            voluntario: 'Demonstração apometria',
+            voluntario: 'Jane Doe',
             observacoes: 'Cenario demo: apometria realizada ha 31 dias.'
         },
         {
@@ -68,7 +68,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 8',
             tipo: 'passe',
             data: dataDiasAtras(31),
-            voluntario: 'Demonstração passe',
+            voluntario: 'Jack Doe',
             observacoes: 'Cenario demo: passe realizado apos apometria ha 31 dias.'
         },
         {
@@ -76,7 +76,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 9',
             tipo: 'apometria',
             data: dataDiasAtras(21),
-            voluntario: 'Demonstração apometria',
+            voluntario: 'Jane Doe',
             observacoes: 'Cenario demo: apometria realizada ha 21 dias.'
         },
         {
@@ -84,7 +84,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 9',
             tipo: 'passe',
             data: dataDiasAtras(21),
-            voluntario: 'Demonstração passe',
+            voluntario: 'Jack Doe',
             observacoes: 'Cenario demo: passe realizado apos apometria ha 21 dias.'
         },
         {
@@ -92,7 +92,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 9',
             tipo: 'reiki',
             data: dataDiasAtras(14),
-            voluntario: 'Demonstração reiki',
+            voluntario: 'John Doe',
             observacoes: 'Cenario demo: sessao de reiki ha 14 dias.'
         },
         {
@@ -100,7 +100,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 9',
             tipo: 'reiki',
             data: dataDiasAtras(7),
-            voluntario: 'Demonstração reiki',
+            voluntario: 'John Doe',
             observacoes: 'Cenario demo: sessao de reiki ha 7 dias.'
         },
         {
@@ -108,7 +108,7 @@ function montarAtendimentosDemo() {
             nome_assistido: 'Assistido Exemplo 9',
             tipo: 'reiki',
             data: dataDiasAtras(2),
-            voluntario: 'Demonstração reiki',
+            voluntario: 'John Doe',
             observacoes: 'Cenario demo: sessao de reiki ha 2 dias.'
         }
     ];
