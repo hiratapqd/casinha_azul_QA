@@ -1,4 +1,5 @@
 const Voluntario = require('../models/Voluntario');
+const Atendimento = require('../models/Atendimento');
 
 exports.criarVoluntario = async (req, res) => {
     try {
@@ -52,10 +53,56 @@ exports.getVisualizarVoluntarios = async (req, res) => {
             filtro[`disponibilidade.${terapia}`] = dia;
         }
 
-        const voluntarios = await Voluntario.find(filtro).sort({ nome: 1 });
+        const voluntarios = await Voluntario.find(filtro).sort({ nome: 1 }).lean();
+
+        const nomesVoluntarios = voluntarios
+            .map((voluntario) => voluntario.nome)
+            .filter(Boolean);
+
+        const nomesNormalizados = nomesVoluntarios.map((nome) => nome.trim().toLowerCase());
+
+        const ultimosAtendimentos = nomesVoluntarios.length > 0
+            ? await Atendimento.aggregate([
+                {
+                    $match: {
+                        voluntario: { $exists: true, $nin: [null, ''] }
+                    }
+                },
+                {
+                    $project: {
+                        data: 1,
+                        voluntarioNormalizado: {
+                            $toLower: {
+                                $trim: { input: '$voluntario' }
+                            }
+                        }
+                    }
+                },
+                {
+                    $match: {
+                        voluntarioNormalizado: { $in: nomesNormalizados }
+                    }
+                },
+                {
+                    $group: {
+                        _id: '$voluntarioNormalizado',
+                        ultimaParticipacao: { $max: '$data' }
+                    }
+                }
+            ])
+            : [];
+
+        const mapaUltimosAtendimentos = Object.fromEntries(
+            ultimosAtendimentos.map((item) => [item._id, item.ultimaParticipacao])
+        );
+
+        const voluntariosComUltimoAtendimento = voluntarios.map((voluntario) => ({
+            ...voluntario,
+            ultimaParticipacao: mapaUltimosAtendimentos[voluntario.nome.trim().toLowerCase()] || null
+        }));
 
         res.render('visualizar_voluntarios', {
-            voluntarios,
+            voluntarios: voluntariosComUltimoAtendimento,
             filtros: { dia, terapia }
         });
     } catch (err) {
