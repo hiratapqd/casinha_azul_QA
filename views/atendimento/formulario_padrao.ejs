@@ -15,7 +15,7 @@
             </div>
             <div class="form-group flex-2">
                 <label>CPF:</label>
-                <input type="text" id="cpf_assistido" name="cpf_assistido" placeholder="Apenas numeros" required autocomplete="off">
+                <input type="text" id="cpf_assistido" name="cpf_assistido" placeholder="Apenas numeros" required autocomplete="off" inputmode="numeric" maxlength="14">
             </div>
         </div>
 
@@ -71,6 +71,26 @@
 
   const dataHoje = new Date().toISOString().split('T')[0];
   document.getElementById('campo_data').value = dataHoje;
+  const campoCpf = document.getElementById('cpf_assistido');
+  let ultimoCpfSemCadastroAlertado = '';
+  let ultimoCpfIncompletoAlertado = '';
+
+  function normalizarCpf(valor) {
+    return (valor || '').replace(/\D/g, '');
+  }
+
+  function cpfTem11Digitos(valor) {
+    return normalizarCpf(valor).length === 11;
+  }
+
+  async function buscarAssistidoPorCpf(cpf) {
+    const resposta = await fetch(`/api/dados-assistido/${cpf}`);
+    if (!resposta.ok) {
+      return null;
+    }
+
+    return resposta.json();
+  }
 
   function renderizarTabela(lista) {
     const corpo = document.getElementById('tabela-corpo');
@@ -92,17 +112,35 @@
     }).join('');
   }
 
-  document.getElementById('cpf_assistido').addEventListener('blur', async function() {
-    const cpf = this.value.trim().replace(/\D/g, '');
-    if (cpf.length < 11) return;
+  campoCpf.addEventListener('blur', async function() {
+    const cpf = normalizarCpf(this.value);
+    if (!cpfTem11Digitos(cpf)) {
+      if (cpf.length > 0 && ultimoCpfIncompletoAlertado !== cpf) {
+        ultimoCpfIncompletoAlertado = cpf;
+        await Swal.fire('CPF incompleto', 'Informe um CPF com 11 digitos.', 'warning');
+      }
+      return;
+    }
+
+    ultimoCpfIncompletoAlertado = '';
+    ultimoCpfSemCadastroAlertado = '';
 
     document.getElementById('idSolicitacao').value = `${cpf}_${formularioConfig.tipo}_${dataHoje}`;
 
     try {
-      const resDados = await fetch(`/api/dados-assistido/${cpf}`).then(r => r.json());
-      if (resDados) {
-        document.getElementById('campo_nome').value = resDados.nome_assistido || '';
+      const resDados = await buscarAssistidoPorCpf(cpf);
+      if (!resDados) {
+        document.getElementById('campo_nome').value = '';
+        renderizarTabela([]);
+        if (ultimoCpfSemCadastroAlertado !== cpf) {
+          ultimoCpfSemCadastroAlertado = cpf;
+          await Swal.fire('Assistido não encontrado', 'Este CPF ainda não está cadastrado. Faça o cadastro antes de registrar o atendimento.', 'warning');
+        }
+        return;
       }
+
+      ultimoCpfSemCadastroAlertado = '';
+      document.getElementById('campo_nome').value = resDados.nome_assistido || '';
 
       const resHist = await fetch(`/api/historico/${formularioConfig.tipo}/${cpf}`).then(r => r.json());
 
@@ -124,9 +162,25 @@
   document.getElementById('atendimentoForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button');
+
+    if (!cpfTem11Digitos(campoCpf.value)) {
+      await Swal.fire('CPF invalido', 'Informe um CPF com 11 digitos antes de finalizar.', 'warning');
+      campoCpf.focus();
+      return;
+    }
+
     btn.disabled = true;
 
     try {
+      const assistido = await buscarAssistidoPorCpf(normalizarCpf(campoCpf.value));
+      if (!assistido) {
+        await Swal.fire('Assistido nao encontrado', 'Este CPF ainda nao esta cadastrado. Faca o cadastro antes de finalizar o atendimento.', 'warning');
+        campoCpf.focus();
+        btn.disabled = false;
+        return;
+      }
+
+      ultimoCpfSemCadastroAlertado = '';
       const body = new URLSearchParams(new FormData(e.target));
       const resp = await fetch(e.target.action, {
         method: 'POST',
@@ -135,7 +189,8 @@
       });
 
       if (!resp.ok) {
-        throw new Error();
+        const erro = await resp.json().catch(() => null);
+        throw new Error(erro?.mensagem || 'Falha ao salvar atendimento.');
       }
 
       await Swal.fire('Sucesso', formularioConfig.sucessoMensagem, 'success');
@@ -146,7 +201,7 @@
         window.location.href = formularioConfig.redirectAposSalvar;
       }
     } catch (err) {
-      Swal.fire('Erro', 'Falha ao salvar atendimento.', 'error');
+      Swal.fire('Erro', err.message || 'Falha ao salvar atendimento.', 'error');
       btn.disabled = false;
     }
   });

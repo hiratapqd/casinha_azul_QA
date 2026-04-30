@@ -8,10 +8,10 @@ const Atendimento = require('../src/models/Atendimento');
 const Assistido = require('../src/models/Assistido');
 
 const DEMO_ASSISTIDOS = [
-    { cpf: '12345678906', nome: 'Assistido Exemplo 6' },
-    { cpf: '12345678907', nome: 'Assistido Exemplo 7' },
-    { cpf: '12345678908', nome: 'Assistido Exemplo 8' },
-    { cpf: '12345678909', nome: 'Assistido Exemplo 9' }
+    { cpf: '12345678906', nome: 'assistido exemplo 6' },
+    { cpf: '12345678907', nome: 'assistido exemplo 7' },
+    { cpf: '12345678908', nome: 'assistido exemplo 8' },
+    { cpf: '12345678909', nome: 'assistido exemplo 9' }
 ];
 
 function dataDiasAtras(dias) {
@@ -25,91 +25,115 @@ function montarAtendimentosDemo() {
     return [
         {
             cpf_assistido: '12345678906',
-            nome_assistido: 'Assistido Exemplo 6',
+            nome_assistido: 'assistido exemplo6',
             tipo: 'apometria',
             data: dataDiasAtras(91),
             voluntario: 'Jane Doe',
-            observacoes: 'Cenario demo: apometria realizada ha 91 dias.'
+            observacoes: 'Cenario demo: apometria realizada há 91 dias.'
         },
         {
             cpf_assistido: '12345678906',
-            nome_assistido: 'Assistido Exemplo 6',
+            nome_assistido: 'assistido exemplo6',
             tipo: 'passe',
             data: dataDiasAtras(91),
             voluntario: 'Jack Doe',
-            observacoes: 'Cenario demo: passe realizado apos apometria ha 91 dias.'
+            observacoes: 'Cenario demo: passe realizado após apometria há 91 dias.'
         },
         {
             cpf_assistido: '12345678907',
-            nome_assistido: 'Assistido Exemplo 7',
+            nome_assistido: 'assistido exemplo7',
             tipo: 'apometria',
             data: dataDiasAtras(61),
             voluntario: 'Jane Doe',
-            observacoes: 'Cenario demo: apometria realizada ha 61 dias.'
+            observacoes: 'Cenario demo: apometria realizada há 61 dias.'
         },
         {
             cpf_assistido: '12345678907',
-            nome_assistido: 'Assistido Exemplo 7',
+            nome_assistido: 'assistido exemplo7',
             tipo: 'passe',
             data: dataDiasAtras(61),
             voluntario: 'Jack Doe',
-            observacoes: 'Cenario demo: passe realizado apos apometria ha 61 dias.'
+            observacoes: 'Cenario demo: passe realizado após apometria há 61 dias.'
         },
         {
             cpf_assistido: '12345678908',
-            nome_assistido: 'Assistido Exemplo 8',
+            nome_assistido: 'assistido exemplo8',
             tipo: 'apometria',
             data: dataDiasAtras(31),
             voluntario: 'Jane Doe',
-            observacoes: 'Cenario demo: apometria realizada ha 31 dias.'
+            observacoes: 'Cenario demo: apometria realizada há 31 dias.'
         },
         {
             cpf_assistido: '12345678908',
-            nome_assistido: 'Assistido Exemplo 8',
+            nome_assistido: 'assistido exemplo8',
             tipo: 'passe',
             data: dataDiasAtras(31),
             voluntario: 'Jack Doe',
-            observacoes: 'Cenario demo: passe realizado apos apometria ha 31 dias.'
+            observacoes: 'Cenario demo: passe realizado após apometria há 31 dias.'
         },
         {
             cpf_assistido: '12345678909',
-            nome_assistido: 'Assistido Exemplo 9',
+            nome_assistido: 'assistido exemplo9',
             tipo: 'apometria',
             data: dataDiasAtras(21),
             voluntario: 'Jane Doe',
-            observacoes: 'Cenario demo: apometria realizada ha 21 dias.'
+            observacoes: 'Cenario demo: apometria realizada há 21 dias.'
         },
         {
             cpf_assistido: '12345678909',
-            nome_assistido: 'Assistido Exemplo 9',
+            nome_assistido: 'assistido exemplo9',
             tipo: 'passe',
             data: dataDiasAtras(21),
             voluntario: 'Jack Doe',
-            observacoes: 'Cenario demo: passe realizado apos apometria ha 21 dias.'
+            observacoes: 'Cenario demo: passe realizado após apometria há 21 dias.'
         },
         {
             cpf_assistido: '12345678909',
-            nome_assistido: 'Assistido Exemplo 9',
+            nome_assistido: 'assistido exemplo9',
             tipo: 'reiki',
             data: dataDiasAtras(14),
             voluntario: 'John Doe',
-            observacoes: 'Cenario demo: sessao de reiki ha 14 dias.'
+            observacoes: 'Cenario demo: sessão de reiki há 14 dias.'
         },
         {
             cpf_assistido: '12345678909',
-            nome_assistido: 'Assistido Exemplo 9',
+            nome_assistido: 'assistido exemplo9',
+            tipo: 'passe',
+            data: dataDiasAtras(14),
+            voluntario: 'John Doe',
+            observacoes: 'Cenario demo: passe realizado após reiki há 14 dias.'
+        },
+        {
+            cpf_assistido: '12345678909',
+            nome_assistido: 'assistido exemplo9',
             tipo: 'reiki',
             data: dataDiasAtras(7),
             voluntario: 'John Doe',
-            observacoes: 'Cenario demo: sessao de reiki ha 7 dias.'
+            observacoes: 'Cenario demo: sessão de reiki há 7 dias.'
         },
         {
             cpf_assistido: '12345678909',
-            nome_assistido: 'Assistido Exemplo 9',
+            nome_assistido: 'assistido exemplo9',
+            tipo: 'passe',
+            data: dataDiasAtras(7),
+            voluntario: 'John Doe',
+            observacoes: 'Cenario demo: passe realizado após reiki há 7 dias.'
+        },
+        {
+            cpf_assistido: '12345678909',
+            nome_assistido: 'assistido exemplo9',
             tipo: 'reiki',
             data: dataDiasAtras(2),
             voluntario: 'John Doe',
-            observacoes: 'Cenario demo: sessao de reiki ha 2 dias.'
+            observacoes: 'Cenario demo: sessão de reiki há 2 dias.'
+        },
+        {
+            cpf_assistido: '12345678909',
+            nome_assistido: 'assistido exemplo9',
+            tipo: 'passe',
+            data: dataDiasAtras(2),
+            voluntario: 'John Doe',
+            observacoes: 'Cenario demo: passe realizado após reiki há 2 dias.'
         }
     ];
 }
